@@ -21,6 +21,7 @@
 #include <linux/bpf.h>
 
 #include "gov.h"
+#include "ebpf.h"
 
 #define BUCKETS 12
 #define INTERVAL_SHIFT 3
@@ -178,6 +179,7 @@ again:
 	thresh = max - 1;
 	goto again;
 }
+
 
 /**
  * morph_select - selects the next idle state to enter
@@ -514,3 +516,6 @@ static int __init init_morph(void)
 }
 
 postcore_initcall(init_morph);
+
+// Define BPF program license
+//char _license[] SEC("license") = "GPL";
