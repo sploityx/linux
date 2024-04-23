@@ -4,8 +4,11 @@ menu "CPU Idle"
 config CPU_IDLE
 	bool "CPU idle PM support"
 	default y if ACPI || PPC_PSERIES
-	select CPU_IDLE_GOV_LADDER if (!NO_HZ && !NO_HZ_IDLE)
-	select CPU_IDLE_GOV_MENU if (NO_HZ || NO_HZ_IDLE) && !CPU_IDLE_GOV_TEO
+	select CPU_IDLE_GOV_EAGLE
+	select CPU_IDLE_GOV_LADDER if (!NO_HZ && !NO_HZ_IDLE) \
+                               && !CPU_IDLE_GOV_EAGLE
+	select CPU_IDLE_GOV_MENU if (NO_HZ || NO_HZ_IDLE) && !CPU_IDLE_GOV_TEO \
+                             && !CPU_IDLE_GOV_EAGLE
 	help
 	  CPU idle is a generic framework for supporting software-controlled
 	  idle processor power management.  It includes modular cross-platform
@@ -43,6 +46,9 @@ config CPU_IDLE_GOV_HALTPOLL
 	  state.
 
 	  Some virtualized workloads benefit from using it.
+
+config CPU_IDLE_GOV_EAGLE
+	bool "Eagle governor (for correcting idle states on the fly)"
 
 config DT_IDLE_STATES
 	bool
